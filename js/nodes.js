@@ -60,8 +60,8 @@ class Nodes {
         this.addButton("misterio-back-button", "opulente")
 
         // EVENTOS
-        //this.events.subscribe(GlobalEvents.ON_DOORS_OPENED, this.onDoorsOpened);
-        this.events.subscribe(GlobalEvents.ON_DOORS_START_OPENING, this.onDoorsStartOpening);
+        this.events.subscribe(GlobalEvents.ON_DOORS_OPENED, this.onDoorsOpened);
+        //this.events.subscribe(GlobalEvents.ON_DOORS_START_OPENING, this.onDoorsStartOpening);
     }
 
     onDoorsOpened = ()=>{
@@ -178,7 +178,13 @@ class Nodes {
     }
 
     move = (nodeID, top, left) =>{
-        $(DOM.getElementID(nodeID)).animate({ top: top, left: left}, {duration:this.duration, easing: Settings.easing});
+        anime({
+            targets: DOM.getElementID(nodeID),
+            translateX: left,
+            translateY: top,
+            duration: this.duration,
+            easing: Settings.easing
+        });
     }
 
     addNode = (id, position)=> {
@@ -189,8 +195,6 @@ class Nodes {
     getNode = (nodeID) =>{
         return this.nodes.find(node => node.id == nodeID)
     }
-
-    
 
     reversePosition = (currentPosition)=>{
         switch(currentPosition){

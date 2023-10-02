@@ -21,14 +21,15 @@ class Doors {
     open = ()=>{
         const top = -Screen.H;
         const bottom = Screen.H;
-        $(DOM.getElementID("top_door")).animate({ top: top, left: 0}, {duration:this.duration, easing: Settings.easing});
-        $(DOM.getElementID("bottom_door")).animate({ top: bottom, left: 0}, {duration:this.duration, easing: Settings.easing, complete:this.onCompleteAnimation});
+        
+        DOM.anime("top_door", 0, top, this.duration, Settings.easing)
+        DOM.anime("bottom_door", 0, bottom, this.duration, Settings.easing, this.onCompleteAnimation)
 
         this.events.notify(GlobalEvents.ON_DOORS_START_OPENING, {});
     }
 
     onCompleteAnimation = ()=>{
-        console.log("onCOmpleteAnmation")
+        console.log("onCompleteAnmation")
         this.events.notify(GlobalEvents.ON_DOORS_OPENED, {});
     }
 }

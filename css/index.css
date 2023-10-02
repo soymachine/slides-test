@@ -119,6 +119,7 @@ button {
 .door {
     background-color: hsl( var(--clr-dark)) !important;
     z-index: 1000;
+    transform: translateY(0);
 }
 
 .full-width-div {
@@ -130,7 +131,7 @@ button {
     align-content: center;
     align-items: center;
     font-size: 2rem;
-    transition: transform 1.0s ease-in-out;
+    /*transition: transform 1.0s ease-in-out;*/
     background-color: hsl( var(--clr-white) / .2 );
 }
 

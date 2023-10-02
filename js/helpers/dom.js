@@ -9,9 +9,25 @@ DOM.getElementID = (id)=>{
 }
 
 DOM.positon = (id, left, top)=>{
-    const divName = DOM.getElementID(id)
-    $(divName).css("left", DOM.px(left))
-    $(divName).css("top", DOM.px(top))
+    anime({
+        targets: DOM.getElementID(id),
+        translateX: DOM.px(left),
+        translateY: DOM.px(top),
+        duration: 0.001
+    });
+}
+
+DOM.anime = (id, left, top, duration, ease, fn) =>{
+    anime({
+        targets: DOM.getElementID(id),
+        translateX: DOM.px(left),
+        translateY: DOM.px(top),
+        duration: duration,
+        easing: ease,
+        complete: function(anim) {
+            fn?.()
+        }
+    });
 }
 
 DOM.px = (amount)=>{

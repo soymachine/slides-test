@@ -13,9 +13,7 @@ class Background {
         // Tiempo de duración de las animaciones
         this.duration = Settings.background_duration 
 
-        const divName = DOM.getElementID(id)
-        $(divName).css("top", top)
-        $(divName).css("left", left)
+        DOM.positon(this.id, this.top, this.left)
 
         const events = GlobalEvents.getInstance()
         events.subscribe(GlobalEvents.ON_NODE_CHANGE, this.onChange);
@@ -48,7 +46,8 @@ class Background {
                 break;
         }
 
-        $(DOM.getElementID(this.id)).animate({ top: this.top, left: this.left}, {duration:this.duration, easing: Settings.easing});
+        // $(DOM.getElementID(this.id)).animate({ top: this.top, left: this.left}, {duration:this.duration, easing: Settings.easing});
+        DOM.anime(this.id, this.left, this.top, this.duration, Settings.easing)
     }
 
    
