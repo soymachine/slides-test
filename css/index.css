@@ -116,6 +116,11 @@ button {
     display: none;
 }
 
+.door {
+    background-color: hsl( var(--clr-dark)) !important;
+    z-index: 1000;
+}
+
 .full-width-div {
     position: absolute;
     width: 100vw;

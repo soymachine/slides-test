@@ -1,6 +1,7 @@
 import Node from './node.js';
 import Settings from './settings.js';
 import GlobalEvents from './globalevents.js';
+import DOM from './helpers/dom.js';
 
 class Background {
     constructor(id, offset, top, left) {
@@ -12,7 +13,7 @@ class Background {
         // Tiempo de duración de las animaciones
         this.duration = Settings.background_duration 
 
-        const divName = this.getElementID(id)
+        const divName = DOM.getElementID(id)
         $(divName).css("top", top)
         $(divName).css("left", left)
 
@@ -47,12 +48,10 @@ class Background {
                 break;
         }
 
-        $(this.getElementID(this.id)).animate({ top: this.top, left: this.left}, {duration:this.duration, easing: "easeInOutCubic"});
+        $(DOM.getElementID(this.id)).animate({ top: this.top, left: this.left}, {duration:this.duration, easing: Settings.easing});
     }
 
-    getElementID = (id)=>{
-        return "#" + id
-    }
+   
 }
 
 export default Background;

@@ -26,7 +26,8 @@ class GlobalEvents {
      
     // Ahora: notifica siempre a todos los suscritores, no admite distinción del evento
     notify(event = "", data) {
-        this.events[event].forEach((observer) => observer(data));
+        // Cuidado! No podemos notificar si no hay nadie escuchando este evento
+        this.events[event]?.forEach((observer) => observer(data));
     }
 
 }
@@ -41,5 +42,7 @@ GlobalEvents.getInstance = ()=>{
 }
 
 GlobalEvents.ON_NODE_CHANGE = "ON_NODE_CHANGE"
+GlobalEvents.ON_DOORS_OPENED = "ON_DOORS_OPENED"
+GlobalEvents.ON_DOORS_START_OPENING = "ON_DOORS_START_OPENING"
 
 export default GlobalEvents;

@@ -1,6 +1,8 @@
 import Node from './node.js';
 import Settings from './settings.js';
 import GlobalEvents from './globalevents.js';
+import DOM from './helpers/dom.js';
+import Screen from './helpers/screen.js';
 
 class Nodes {
 
@@ -22,8 +24,8 @@ class Nodes {
         this.z_index = 100
 
         // valores de la pantalla
-        this.W = $(window).width()
-        this.H = $(window).height()
+        this.W = Screen.W
+        this.H = Screen.H
 
         this.currentNodeID = undefined
 
@@ -57,17 +59,67 @@ class Nodes {
         this.addButton("resplandor-back-button", "opulente")
         this.addButton("misterio-back-button", "opulente")
 
+        // EVENTOS
+        //this.events.subscribe(GlobalEvents.ON_DOORS_OPENED, this.onDoorsOpened);
+        this.events.subscribe(GlobalEvents.ON_DOORS_START_OPENING, this.onDoorsStartOpening);
     }
 
-    addButton = (buttonID, nextNodeID)=>{
-        const that = this
-        $(this.getElementID(buttonID)).click(function () {
-            that.hook(nextNodeID)
-        });
+    onDoorsOpened = ()=>{
+        this.gotoNode("presentation-1")
     }
 
-    hook = (nextNodeID)=>{
-        this.gotoNode(nextNodeID)        
+    onDoorsStartOpening = ()=>{
+        // Llamar a lo de abajo con un delay
+        
+        setTimeout(()=>{
+            this.gotoNode("presentation-1")
+        }, 500)
+    }
+
+    setupNodes = ()=>{
+        this.nodes.map((node, idx) =>{
+            const position = node.position
+            const nodoID = node.id
+            const divName = DOM.getElementID(nodoID)
+            let left = 0
+            let top = 0
+            let nodeOffset = this.getOffset(nodoID)
+            switch(position){
+                case Node.LEFT:
+                    left = -(this.W + nodeOffset)
+                    break;
+                case Node.RIGHT:
+                    left = this.W + nodeOffset
+                    break;
+                case Node.TOP:
+                    top = -(this.H + nodeOffset)
+                    break;
+                case Node.BOTTOM:
+                    top = this.H + nodeOffset
+                    break;
+                case Node.CENTER:
+                    break;
+            }
+
+            //console.log(`this.W:${this.W} offset:${nodeOffset} position:${position} nodoID:${nodoID}`)
+            // Posicionamos el nodo
+            DOM.positon(nodoID, left, top)
+
+            // Si los margenes son distintos de 0, agregamos margenes
+            if(this.margin > 0){
+                $(divName).css("margin", this.margin)
+                $(divName).css("width", this.W - (this.margin * 2))
+                $(divName).css("height", this.H - (this.margin * 2))
+            }
+            
+            // Actualizamos los z-index
+            $(divName).css("z-index", this.z_index + idx)
+        })
+    }
+
+    getOffset = (nodeID) =>{
+        const offset = Settings.custom_offsets[nodeID] ??= this.offset;
+        return offset
     }
 
     gotoNode = (nextNodeID)=>{
@@ -77,7 +129,7 @@ class Nodes {
             // Recogemos el nodo actual
             const currentNode = this.getNode(this.currentNodeID)
             // Calculamos a dónde se ha de mover el actual (depende de donde esté el siguiente)
-            const outPosition = this.getOutPosition(nextNode.getPosition())
+            const outPosition = this.getOutPosition(nextNode.getPosition(), this.currentNodeID)
             // Movemos al actual fuera de la pantalla
             this.move(this.currentNodeID, outPosition.top, outPosition.left)
             // Actualizamos la posición del actual
@@ -98,6 +150,48 @@ class Nodes {
         nextNode.setPosition(Node.CENTER)
     }
 
+    getOutPosition = (positionPush, currentNodeID)=>{
+        let left = 0
+        let top = 0
+        let positionResult = Node.LEFT
+        let nodeOffset = this.getOffset(currentNodeID)
+        switch(positionPush){
+            case Node.LEFT:
+                left = this.W + nodeOffset
+                positionResult = Node.RIGHT
+                break;
+            case Node.RIGHT:
+                left = -(this.W + nodeOffset)
+                positionResult = Node.LEFT
+                break;
+            case Node.TOP:
+                top = this.H + nodeOffset
+                positionResult = Node.BOTTOM
+                break;
+            case Node.BOTTOM:
+                top = -(this.H + nodeOffset)
+                positionResult = Node.TOP                
+                break;
+        }
+
+        return {top, left, positionResult}
+    }
+
+    move = (nodeID, top, left) =>{
+        $(DOM.getElementID(nodeID)).animate({ top: top, left: left}, {duration:this.duration, easing: Settings.easing});
+    }
+
+    addNode = (id, position)=> {
+        const node = new Node(id, position)
+        this.nodes.push(node)
+    }
+
+    getNode = (nodeID) =>{
+        return this.nodes.find(node => node.id == nodeID)
+    }
+
+    
+
     reversePosition = (currentPosition)=>{
         switch(currentPosition){
             case Node.LEFT:
@@ -111,94 +205,16 @@ class Nodes {
         }
     }
 
-    getOutPosition = (positionPush)=>{
-        let left = 0
-        let top = 0
-        let positionResult = Node.LEFT
-
-        switch(positionPush){
-            case Node.LEFT:
-                left = this.W + this.offset
-                positionResult = Node.RIGHT
-                break;
-            case Node.RIGHT:
-                left = -(this.W + this.offset)
-                positionResult = Node.LEFT
-                break;
-            case Node.TOP:
-                top = this.H + this.offset
-                positionResult = Node.BOTTOM
-                break;
-            case Node.BOTTOM:
-                top = -(this.H + this.offset)
-                positionResult = Node.TOP                
-                break;
-        }
-
-        return {top, left, positionResult}
+    addButton = (buttonID, nextNodeID)=>{
+        const that = this
+        $(DOM.getElementID(buttonID)).click(function () {
+            that.hook(nextNodeID)
+        });
     }
 
-    move = (nodeID, top, left) =>{
-        $(this.getElementID(nodeID)).animate({ top: top, left: left}, {duration:this.duration, easing: "easeInOutCubic"});
+    hook = (nextNodeID)=>{
+        this.gotoNode(nextNodeID)        
     }
-
-    setupNodes = ()=>{
-        this.nodes.map((node, idx) =>{
-            const position = node.position
-            const divName = this.getElementID(node.id)
-            let left = 0
-            let top = 0
-            switch(position){
-                case Node.LEFT:
-                    left = -(this.W + this.offset)
-                    break;
-                case Node.RIGHT:
-                    left = this.W + this.offset
-                    break;
-                case Node.TOP:
-                    top = -(this.H + this.offset)
-                    break;
-                case Node.BOTTOM:
-                    top = this.H + this.offset
-                    break;
-                case Node.CENTER:
-                    break;
-            }
-
-            // Posicionamos el nodo
-            $(divName).css("left", this.px(left))
-            $(divName).css("top", this.px(top))
-
-            // Si los margenes son distintos de 0, agregamos margenes
-            if(this.margin > 0){
-                $(divName).css("margin", this.margin)
-                $(divName).css("width", this.W - (this.margin * 2))
-                $(divName).css("height", this.H - (this.margin * 2))
-            }
-            
-            // Actualizamos los z-index
-            $(divName).css("z-index", this.z_index + idx)
-        })
-    }
-
-    getElementID = (id)=>{
-        return "#" + id
-    }
-
-    addNode = (id, position)=> {
-        const node = new Node(id, position)
-        this.nodes.push(node)
-    }
-
-    getNode = (nodeID) =>{
-        return this.nodes.find(node => node.id == nodeID)
-    }
-
-    px = (amount)=>{
-        return amount + "px";
-    }
-
-
     
 }
 
