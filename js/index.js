@@ -6,6 +6,7 @@ import Background from './background.js';
 import Settings from './settings.js';
 import Doors from './transitions/doors.js';
 
+
 $(document).ready(function(){
     
     const nodes = new Nodes(Settings.margin, Settings.offset)
@@ -16,4 +17,16 @@ $(document).ready(function(){
         //nodes.gotoNode("presentation-1")
         doors.open()
     })
+
+
+    const fps = new FPS.FPS()
+
+    // update function
+    function update() {
+        // do stuff like rendering and dancing
+        fps.frame()
+        requestAnimationFrame(update)
+    }
+
+    update()
 });
