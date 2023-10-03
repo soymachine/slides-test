@@ -13,7 +13,7 @@ DOM.positon = (id, left, top)=>{
         targets: DOM.getElementID(id),
         translateX: DOM.px(left),
         translateY: DOM.px(top),
-        duration: 0.001
+        duration: 0.0001
     });
 }
 

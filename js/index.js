@@ -19,14 +19,16 @@ $(document).ready(function(){
     })
 
 
-    const fps = new FPS.FPS()
+    if(Settings.isFPSEnabled){
+        const fps = new FPS.FPS()
 
-    // update function
-    function update() {
-        // do stuff like rendering and dancing
-        fps.frame()
-        requestAnimationFrame(update)
+        // update function
+        function update() {
+            // do stuff like rendering and dancing
+            fps.frame()
+            requestAnimationFrame(update)
+        }
+    
+        update()
     }
-
-    update()
 });

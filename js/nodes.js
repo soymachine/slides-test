@@ -30,9 +30,9 @@ class Nodes {
         this.currentNodeID = undefined
 
         // Aquí vamos a crear la estructura de nodos
-        this.addNode("presentation-1", Node.RIGHT)
-        this.addNode("presentation-2", Node.RIGHT)
-        this.addNode("question-1", Node.BOTTOM)
+        this.addNode("presentation-1", Node.TOP)
+        this.addNode("presentation-2", Node.TOP)
+        this.addNode("question-1", Node.TOP)
         this.addNode("ligero", Node.LEFT)
         this.addNode("opulente", Node.RIGHT)
         this.addNode("delicadeza", Node.BOTTOM)
@@ -60,8 +60,8 @@ class Nodes {
         this.addButton("misterio-back-button", "opulente")
 
         // EVENTOS
-        this.events.subscribe(GlobalEvents.ON_DOORS_OPENED, this.onDoorsOpened);
-        //this.events.subscribe(GlobalEvents.ON_DOORS_START_OPENING, this.onDoorsStartOpening);
+        //this.events.subscribe(GlobalEvents.ON_DOORS_OPENED, this.onDoorsOpened);
+        this.events.subscribe(GlobalEvents.ON_DOORS_START_OPENING, this.onDoorsStartOpening);
     }
 
     onDoorsOpened = ()=>{
