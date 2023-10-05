@@ -41,12 +41,18 @@ class Swipe{
             distX = touchobj.pageX - startX // get horizontal dist traveled by finger while in contact with surface
             distY = touchobj.pageY - startY // get vertical dist traveled by finger while in contact with surface
             elapsedTime = new Date().getTime() - startTime // get time elapsed
+            
+            console.log(`touchend elapsedTime:${elapsedTime} allowedTime:${allowedTime} threshold:${threshold} distX:${distX} distY:${distY} swipedir:${swipedir}`)
+            
             if (elapsedTime <= allowedTime){ // first condition for awipe met
+                
+                // console.log(`touchend elapsedTime:${elapsedTime}`)
+                
                 if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
-                    swipedir = (distX < 0)? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
+                    swipedir = (distX < 0)? Swipe.LEFT : Swipe.RIGHT // if dist traveled is negative, it indicates left swipe
                 }
                 else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint){ // 2nd condition for vertical swipe met
-                    swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
+                    swipedir = (distY < 0)? Swipe.UP : Swipe.DOWN // if dist traveled is negative, it indicates up swipe
                 }
             }
             handleswipe(swipedir)
@@ -56,4 +62,10 @@ class Swipe{
         
     }
 }
+
+Swipe.LEFT = "left"
+Swipe.RIGHT = "right"
+Swipe.UP = "up"
+Swipe.DOWN = "down"
+
 export default Swipe;

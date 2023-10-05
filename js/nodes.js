@@ -4,6 +4,7 @@ import GlobalEvents from './globalevents.js';
 import DOM from './helpers/dom.js';
 import Screen from './helpers/screen.js';
 import Presentation1 from './sections/Presentation1.js';
+import Swipe from './helpers/swipe.js';
 
 class Nodes {
 
@@ -71,9 +72,12 @@ class Nodes {
         this.events.subscribe(GlobalEvents.ON_SWIPE_GESTURE, this.onSwipeGesture);
     }
 
-    onSwipeGesture = ()=>{
+    onSwipeGesture = (direction)=>{
         console.log("swipe!")
-        this.gotoNode("presentation-2")
+
+        if(direction == Swipe.UP){
+            this.gotoNode("presentation-2")
+        }
     }
 
     onDoorsOpened = ()=>{
