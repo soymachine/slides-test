@@ -42,7 +42,6 @@ class Swipe{
             distY = touchobj.pageY - startY // get vertical dist traveled by finger while in contact with surface
             elapsedTime = new Date().getTime() - startTime // get time elapsed
             
-            console.log(`touchend elapsedTime:${elapsedTime} allowedTime:${allowedTime} threshold:${threshold} distX:${distX} distY:${distY} swipedir:${swipedir}`)
             
             if (elapsedTime <= allowedTime){ // first condition for awipe met
                 
@@ -55,6 +54,9 @@ class Swipe{
                     swipedir = (distY < 0)? Swipe.UP : Swipe.DOWN // if dist traveled is negative, it indicates up swipe
                 }
             }
+
+            console.log(`touchend elapsedTime:${elapsedTime} allowedTime:${allowedTime} threshold:${threshold} distX:${distX} distY:${distY} swipedir:${swipedir}`)
+
             handleswipe(swipedir)
             e.preventDefault()
         }, false)

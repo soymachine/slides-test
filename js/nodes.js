@@ -73,9 +73,9 @@ class Nodes {
     }
 
     onSwipeGesture = (direction)=>{
-        console.log("swipe!")
 
         if(direction == Swipe.UP){
+            console.log("swipe!")            
             this.gotoNode("presentation-2")
         }
     }
