@@ -2,6 +2,42 @@ import GlobalEvents from '../globalevents.js';
 
 class Swipe{
 
+    constructor(container){
+        var listener = SwipeListener(container);
+
+        container.addEventListener('swipe', function (e) {
+            var directions = e.detail.directions;
+            var x = e.detail.x;
+            var y = e.detail.y;
+            let events = GlobalEvents.getInstance();
+          
+            if (directions.left) {
+              console.log('Swiped left.');
+              events.notify(GlobalEvents.ON_SWIPE_GESTURE, Swipe.LEFT);
+            }
+          
+            if (directions.right) {
+              console.log('Swiped right.');
+              events.notify(GlobalEvents.ON_SWIPE_GESTURE, Swipe.RIGHT);
+            }
+          
+            if (directions.top) {
+              console.log('Swiped top.');
+              events.notify(GlobalEvents.ON_SWIPE_GESTURE, Swipe.UP);
+            }
+          
+            if (directions.bottom) {
+              console.log('Swiped bottom.');
+              events.notify(GlobalEvents.ON_SWIPE_GESTURE, Swipe.DOWN);
+            }
+          
+           
+          
+            console.log('Started horizontally at', x[0], 'and ended at', x[1]);
+            console.log('Started vertically at', y[0], 'and ended at', y[1]);
+          });
+    }
+    /*
     constructor(el) {
         var touchsurface = el,
         swipedir,
@@ -63,6 +99,7 @@ class Swipe{
 
         
     }
+    */
 }
 
 Swipe.LEFT = "left"

@@ -56,7 +56,7 @@ Settings.custom_offsets = {
 Settings.isFPSEnabled = true;
 
 // Activar / Desactivar el movimiento del background
-Settings.version = "0.1.4";
+Settings.version = "0.1.5";
 
 
 
