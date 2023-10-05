@@ -9,7 +9,7 @@ import Swipe from './helpers/swipe.js';
 
 
 $(document).ready(function(){
-    //  const swipe = new Swipe(document.getElementById('container'))
+    const swipe = new Swipe(document.getElementById('container'))
     const nodes = new Nodes(Settings.margin, Settings.offset)
 
     if(Settings.is_background_active){

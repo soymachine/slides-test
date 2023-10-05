@@ -91,11 +91,26 @@ p {
     border:1px solid red;
 }
 
+.touch {
+    border:2px solid yellow;
+    position:absolute;
+    top:0px;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    
+}
+
 #version {
     position: absolute;
     z-index: 2000;
     color:white;
     width: 100vw;
+
 }
 
 /* SLIDES */
