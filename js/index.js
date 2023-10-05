@@ -15,7 +15,7 @@ $(document).ready(function(){
     if(Settings.is_background_active){
         const background = new Background("background", Settings.background_offset, Settings.background_top, Settings.background_left)
     }
-    
+
     const doors = new Doors()
     Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
         $(".container").css("display", "block")
@@ -36,4 +36,7 @@ $(document).ready(function(){
     
         update()
     }
+
+    // Version number
+    $("#version").html(Settings.version)
 });

@@ -55,6 +55,9 @@ Settings.custom_offsets = {
 // Enable/Disable de los FPS
 Settings.isFPSEnabled = true;
 
+// Activar / Desactivar el movimiento del background
+Settings.version = "0.1.1";
+
 
 
 export default Settings;
