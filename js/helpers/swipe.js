@@ -24,7 +24,8 @@ class Swipe{
         touchsurface.addEventListener('touchstart', function(e){
             var touchobj = e.changedTouches[0]
             swipedir = 'none'
-            dist = 0
+            distX = 0
+            distY = 0
             startX = touchobj.pageX
             startY = touchobj.pageY
             startTime = new Date().getTime() // record time when finger first makes contact with surface
