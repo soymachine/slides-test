@@ -97,6 +97,7 @@ button {
     border-radius: 2em;
     border:none;
     background-color:#5733ff;
+    cursor: pointer;
 }
 
 #background {

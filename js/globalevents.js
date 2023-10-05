@@ -44,5 +44,10 @@ GlobalEvents.getInstance = ()=>{
 GlobalEvents.ON_NODE_CHANGE = "ON_NODE_CHANGE"
 GlobalEvents.ON_DOORS_OPENED = "ON_DOORS_OPENED"
 GlobalEvents.ON_DOORS_START_OPENING = "ON_DOORS_START_OPENING"
+GlobalEvents.ON_NODE_START_IN = "ON_NODE_START_IN" 
+GlobalEvents.ON_NODE_END_IN = "ON_NODE_END_IN" 
+GlobalEvents.ON_NODE_START_OUT = "ON_NODE_START_OUT" 
+GlobalEvents.ON_NODE_END_OUT = "ON_NODE_END_OUT"
+GlobalEvents.ON_SWIPE_GESTURE = "ON_SWIPE_GESTURE"
 
 export default GlobalEvents;

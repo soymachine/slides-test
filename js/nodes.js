@@ -3,6 +3,7 @@ import Settings from './settings.js';
 import GlobalEvents from './globalevents.js';
 import DOM from './helpers/dom.js';
 import Screen from './helpers/screen.js';
+import Presentation1 from './sections/Presentation1.js';
 
 class Nodes {
 
@@ -30,9 +31,9 @@ class Nodes {
         this.currentNodeID = undefined
 
         // Aquí vamos a crear la estructura de nodos
-        this.addNode("presentation-1", Node.TOP)
-        this.addNode("presentation-2", Node.TOP)
-        this.addNode("question-1", Node.TOP)
+        this.addNode("presentation-1", Node.BOTTOM)
+        this.addNode("presentation-2", Node.BOTTOM)
+        this.addNode("question-1", Node.BOTTOM)
         this.addNode("ligero", Node.LEFT)
         this.addNode("opulente", Node.RIGHT)
         this.addNode("delicadeza", Node.BOTTOM)
@@ -59,9 +60,20 @@ class Nodes {
         this.addButton("resplandor-back-button", "opulente")
         this.addButton("misterio-back-button", "opulente")
 
+        // Clases específicas para controlar ciertos nodos
+        this.nodeClases = {
+            "presentation-1": new Presentation1("presentation-1")
+        }
+
         // EVENTOS
         //this.events.subscribe(GlobalEvents.ON_DOORS_OPENED, this.onDoorsOpened);
         this.events.subscribe(GlobalEvents.ON_DOORS_START_OPENING, this.onDoorsStartOpening);
+        this.events.subscribe(GlobalEvents.ON_SWIPE_GESTURE, this.onSwipeGesture);
+    }
+
+    onSwipeGesture = ()=>{
+        console.log("swipe!")
+        this.gotoNode("presentation-2")
     }
 
     onDoorsOpened = ()=>{
@@ -131,13 +143,26 @@ class Nodes {
             // Calculamos a dónde se ha de mover el actual (depende de donde esté el siguiente)
             const outPosition = this.getOutPosition(nextNode.getPosition(), this.currentNodeID)
             // Movemos al actual fuera de la pantalla
-            this.move(this.currentNodeID, outPosition.top, outPosition.left)
+            console.log(`move started, currentNode:${this.currentNodeID}`)
+            const nodeOutID = this.currentNodeID
+            this.move(this.currentNodeID, outPosition.top, outPosition.left, ()=>{
+                this.events.notify(GlobalEvents.ON_NODE_END_OUT, nodeOutID);
+            })
             // Actualizamos la posición del actual
             currentNode.setPosition(outPosition.positionResult)
         }
+
+        console.log(`nextNodeID: ${nextNodeID}`)
+
+        // Notificamos los inicios: qué nodo se va a ir y qué nodo va a entrar
+        this.events.notify(GlobalEvents.ON_NODE_START_IN, nextNodeID);
+
+        this.events.notify(GlobalEvents.ON_NODE_START_OUT, this.currentNodeID);
         
         // Movemos al siguiente dentro de la pantalla
-        this.move(nextNodeID, 0, 0)
+        this.move(nextNodeID, 0, 0, ()=>{
+            this.events.notify(GlobalEvents.ON_NODE_END_IN, this.currentNodeID);
+        })
         
         // Actualizamos los valores del current node
         this.currentNodeID = nextNodeID
@@ -148,6 +173,7 @@ class Nodes {
 
         // Actualizamos la posición del siguiente
         nextNode.setPosition(Node.CENTER)
+
     }
 
     getOutPosition = (positionPush, currentNodeID)=>{
@@ -177,13 +203,16 @@ class Nodes {
         return {top, left, positionResult}
     }
 
-    move = (nodeID, top, left) =>{
+    move = (nodeID, top, left, callback) =>{
         anime({
             targets: DOM.getElementID(nodeID),
             translateX: left,
             translateY: top,
             duration: this.duration,
-            easing: Settings.easing
+            easing: Settings.easing,
+            complete: function(anim) {
+                callback?.()
+            }
         });
     }
 

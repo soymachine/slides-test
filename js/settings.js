@@ -9,7 +9,7 @@ Settings.VERTICAL = "VERTICAL";
 Settings.easing = "easeInOutQuint"; // Quad, Quart, Quint, Expo, Sine
 
 // Duración de las transiciones de los nodos
-Settings.node_duration = 1500;
+Settings.node_duration = 2500;
 
 // Duración de las transiciones de las puertas
 Settings.doors_duration = 1000;
@@ -18,19 +18,22 @@ Settings.doors_duration = 1000;
 Settings.doors_easing = "easeInOutQuad";
 
 // Dirección de las transiciones de las puertas
-Settings.doors_direction = Settings.VERTICAL;
+Settings.doors_direction = Settings.HORIZONTAL;
 
 // Duración de las transiciones del background
-Settings.background_duration = 1500;
+Settings.background_duration = 2500;
 
 // Margenes del contenido de un nodo respecto de la pantalla
-Settings.margin = 0;
+Settings.margin = 50;
 
 // Offset entre nodos
-Settings.offset = 0;
+Settings.offset = 10000;
+
+// Activar / Desactivar el movimiento del background
+Settings.is_background_active = true;
 
 // Lo que se mueve el background cada vez que cambiamos de nodo (en cualquier dirección, a modo de parallax)
-Settings.background_offset = 350;
+Settings.background_offset = 150;
 
 // Posición inicial del background en X
 Settings.background_left = -1500;
@@ -50,7 +53,7 @@ Settings.custom_offsets = {
 };
 
 // Enable/Disable de los FPS
-Settings.isFPSEnabled = false;
+Settings.isFPSEnabled = true;
 
 
 
