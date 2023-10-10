@@ -5,11 +5,15 @@ class Settings {
 Settings.HORIZONTAL = "HORIZONTAL";
 Settings.VERTICAL = "VERTICAL";
 
+
+// Nodo inicial
+Settings.start_node = "presentation-1"; // Quad, Quart, Quint, Expo, Sine
+
 // Easing de las animaciones
 Settings.easing = "easeInOutQuint"; // Quad, Quart, Quint, Expo, Sine
 
 // Duración de las transiciones de los nodos
-Settings.node_duration = 2500;
+Settings.node_duration = 2000;
 
 // Duración de las transiciones de las puertas
 Settings.doors_duration = 1000;
@@ -21,7 +25,7 @@ Settings.doors_easing = "easeInOutQuad";
 Settings.doors_direction = Settings.HORIZONTAL;
 
 // Duración de las transiciones del background
-Settings.background_duration = 2500;
+Settings.background_duration = 2000;
 
 // Margenes del contenido de un nodo respecto de la pantalla
 Settings.margin = 50;
@@ -53,7 +57,7 @@ Settings.custom_offsets = {
 };
 
 // Enable/Disable de los FPS
-Settings.isFPSEnabled = true;
+Settings.isFPSEnabled = false;
 
 // Activar / Desactivar el movimiento del background
 Settings.version = "0.1.5";

@@ -6,6 +6,7 @@ import Background from './background.js';
 import Settings from './settings.js';
 import Doors from './transitions/doors.js';
 import Swipe from './helpers/swipe.js';
+import Loader from './helpers/loader.js';
 
 
 $(document).ready(function(){
@@ -17,10 +18,21 @@ $(document).ready(function(){
     }
 
     const doors = new Doors()
-    Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
+
+    const loader = new Loader()
+    loader.load()
+
+
+    // Gestión de la carga de imagenes e inicio de apertura de puertas
+    const events = GlobalEvents.getInstance()
+    // events.notify(GlobalEvents.ON_LOADING_COMPLETED);
+    events.subscribe(GlobalEvents.ON_LOADING_COMPLETED, ()=>{
         $(".container").css("display", "block")
         //nodes.gotoNode("presentation-1")
         doors.open()
+    });
+    Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
+        
     })
 
 

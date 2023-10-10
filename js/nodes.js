@@ -69,27 +69,38 @@ class Nodes {
         // EVENTOS
         //this.events.subscribe(GlobalEvents.ON_DOORS_OPENED, this.onDoorsOpened);
         this.events.subscribe(GlobalEvents.ON_DOORS_START_OPENING, this.onDoorsStartOpening);
-        this.events.subscribe(GlobalEvents.ON_SWIPE_GESTURE, this.onSwipeGesture);
+        //this.events.subscribe(GlobalEvents.ON_SWIPE_GESTURE, this.onSwipeGesture);
+        this.events.subscribe(GlobalEvents.ON_REQUEST_NEW_NODE, this.onRequestNewNode);
+    }
+
+    onRequestNewNode = (requestedNodeID)=>{
+        // TODO Mirar que no nos estemos moviendo ya y bloquear en ese caso
+
+        this.gotoNode(requestedNodeID)
     }
 
     onSwipeGesture = (direction)=>{
 
         if(direction == Swipe.UP){
-            console.log("swipe!")            
+            // console.log("swipe!")            
             this.gotoNode("presentation-2")
         }
     }
 
     onDoorsOpened = ()=>{
-        this.gotoNode("presentation-1")
+        this.gotoStartNode()
     }
 
     onDoorsStartOpening = ()=>{
         // Llamar a lo de abajo con un delay
         
         setTimeout(()=>{
-            this.gotoNode("presentation-1")
+            this.gotoStartNode()
         }, 500)
+    }
+
+    gotoStartNode = ()=>{
+        this.gotoNode(Settings.start_node)
     }
 
     setupNodes = ()=>{
@@ -156,7 +167,7 @@ class Nodes {
             currentNode.setPosition(outPosition.positionResult)
         }
 
-        console.log(`nextNodeID: ${nextNodeID}`)
+        // console.log(`nextNodeID: ${nextNodeID}`)
 
         // Notificamos los inicios: qué nodo se va a ir y qué nodo va a entrar
         this.events.notify(GlobalEvents.ON_NODE_START_IN, nextNodeID);
@@ -170,6 +181,7 @@ class Nodes {
         
         // Actualizamos los valores del current node
         this.currentNodeID = nextNodeID
+        Nodes.currentNodeID = nextNodeID
 
         // Enviamos evento de que hemos movido nodos
         //this.notify(outPosition.positionResult);

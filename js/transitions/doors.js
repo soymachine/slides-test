@@ -30,7 +30,7 @@ class Doors {
 
     open = ()=>{
         
-        console.log("Start opening doors Settings.doors_direction "+ Settings.doors_direction)
+        // console.log("Start opening doors Settings.doors_direction "+ Settings.doors_direction)
 
         setTimeout(()=>{
             
@@ -55,7 +55,7 @@ class Doors {
     }
 
     onCompleteAnimation = ()=>{
-        console.log("onCompleteAnmation")
+        // console.log("onCompleteAnmation")
         this.events.notify(GlobalEvents.ON_DOORS_OPENED, {});
     }
 }

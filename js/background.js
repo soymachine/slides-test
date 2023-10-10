@@ -28,7 +28,7 @@ class Background {
     }
 
     onChange = (positionResult)=>{
-        console.log(`nos hemos de mover a ${positionResult}`)
+        // console.log(`nos hemos de mover a ${positionResult}`)
         // movemos el background según este cambio
         
         switch(positionResult){

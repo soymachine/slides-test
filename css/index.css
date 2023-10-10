@@ -120,6 +120,7 @@ button {
     border:none;
     background-color:#5733ff;
     cursor: pointer;
+    color:hsl( var(--clr-white))
 }
 
 #background {
@@ -128,8 +129,10 @@ button {
     left:0;
     width: 5824px;
     height: 3264px;
+    /*
     background-image: url("../assets/imgs/background.jpg");
     background-repeat: no-repeat;
+    */
 }
 
 .container {
@@ -160,8 +163,23 @@ button {
 
 /** PRESENTACION 1 **/
 #presentation-1{
-    border:2px solid red;
-    
+    border:2px solid red;    
+}
+
+#pre-1-title, #pre-1-description {
+    z-index:100
+}
+
+#presentation-1 > img{
+    position: absolute;
+    top:0px;
+    left:0px;
+}
+
+#presentation-1 > .img-container{
+    position: absolute;
+    top:0px;
+    left:0px;
 }
 
 /** PRESENTACION 2 **/

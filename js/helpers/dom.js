@@ -1,5 +1,5 @@
 class DOM {
-    
+    // ANIME: https://animejs.com/documentation
 }
 
 export default DOM;
@@ -9,11 +9,10 @@ DOM.getElementID = (id)=>{
 }
 
 DOM.positon = (id, left, top)=>{
-    anime({
-        targets: DOM.getElementID(id),
+    
+    anime.set(DOM.getElementID(id), {
         translateX: DOM.px(left),
         translateY: DOM.px(top),
-        duration: 0.0001
     });
 }
 
