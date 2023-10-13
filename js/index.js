@@ -51,4 +51,14 @@ $(document).ready(function(){
 
     // Version number
     $("#version").html(Settings.version)
+
+    // fullscreen
+    const element = document.documentElement; // Elemento a poner en pantalla completa
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+    }
 });
