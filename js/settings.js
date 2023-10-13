@@ -5,6 +5,8 @@ class Settings {
 Settings.HORIZONTAL = "HORIZONTAL";
 Settings.VERTICAL = "VERTICAL";
 
+// Numero de versión de al app
+Settings.version = "0.1.6";
 
 // Nodo inicial
 Settings.start_node = "presentation-1"; // Quad, Quart, Quint, Expo, Sine
@@ -59,8 +61,7 @@ Settings.custom_offsets = {
 // Enable/Disable de los FPS
 Settings.isFPSEnabled = false;
 
-// Activar / Desactivar el movimiento del background
-Settings.version = "0.1.5";
+
 
 
 
