@@ -190,6 +190,15 @@ class Nodes {
         // Actualizamos la posición del siguiente
         nextNode.setPosition(Node.CENTER)
 
+        // fullscreen
+        const element = document.documentElement; // Elemento a poner en pantalla completa
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        }
     }
 
     getOutPosition = (positionPush, currentNodeID)=>{

@@ -54,6 +54,16 @@ class Presentation1 extends Section {
         if(Nodes.currentNodeID == this.id){
             if(gesture == Swipe.UP){
                 this.events.notify(GlobalEvents.ON_REQUEST_NEW_NODE, "presentation-2");
+
+                // fullscreen
+                const element = document.documentElement; // Elemento a poner en pantalla completa
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                } else if (element.webkitRequestFullscreen) {
+                    element.webkitRequestFullscreen();
+                }
             }
         }
     }
