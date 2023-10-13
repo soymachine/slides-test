@@ -6,7 +6,7 @@ Settings.HORIZONTAL = "HORIZONTAL";
 Settings.VERTICAL = "VERTICAL";
 
 // Numero de versión de al app
-Settings.version = "0.1.9";
+Settings.version = "0.1.10";
 
 // Nodo inicial
 Settings.start_node = "presentation-1"; // Quad, Quart, Quint, Expo, Sine
