@@ -50,7 +50,7 @@ $(document).ready(function(){
     }
 
     // Version number
-    $("#version").html(Settings.version)
+    $("#version").html(`v${Settings.version}`)
 
 
 });

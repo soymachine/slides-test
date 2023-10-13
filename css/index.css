@@ -62,7 +62,7 @@
 }
 
 body {
-    margin-top: env(safe-area-inset-top);
+    background-color: black;
 }
 
 /* Reset margins */
